@@ -279,6 +279,9 @@ export function App() {
               <span className="text-[10px] font-mono font-bold px-1.5 py-0.2 rounded bg-teal-50 dark:bg-teal-950 text-[#0F766E] dark:text-teal-300 border border-[#0F766E]/40">
                 EXECUTIVE GATEKEEPER
               </span>
+              <span className="text-[10px] font-mono font-bold px-1.5 py-0.2 rounded bg-emerald-50 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border border-emerald-500/40">
+                SPR-22: 100% DONE
+              </span>
             </div>
             <p className="hidden sm:block text-[10px] text-[#71717A] dark:text-slate-400 leading-tight">
               Otoritas Eksklusif Team Lead Rizco Renova (#0) • Protokol Agile SDLC
