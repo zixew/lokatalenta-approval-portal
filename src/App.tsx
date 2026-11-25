@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { INITIAL_PROPOSALS } from './data';
+import { dispatchSDLCEvent } from './services/eventBus';
 import type { DocumentProposal, ProposalStatus } from './types';
 
 export function App() {
@@ -77,6 +78,7 @@ export function App() {
   const revisionCount = proposals.filter((p) => p.status === 'revision_requested').length;
 
   const handleApprove = (proposalId: string) => {
+    const targetProp = proposals.find((p) => p.id === proposalId);
     const now = new Date();
     const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
     setProposals((prev) =>
@@ -91,6 +93,17 @@ export function App() {
           : p
       )
     );
+    dispatchSDLCEvent({
+      type: 'proposal_approved',
+      proposalId,
+      proposalTitle: targetProp?.title,
+      authorId: targetProp?.authorId,
+      authorName: targetProp?.authorName,
+      targetBacklogId: targetProp?.targetBacklogId,
+      targetBacklogTitle: targetProp?.targetBacklogTitle,
+      notes: feedbackNote || 'Disetujui penuh oleh Team Lead Rizco Renova.',
+      timestamp: timeStr,
+    });
     setFeedbackNote('');
   };
 
@@ -99,6 +112,7 @@ export function App() {
       alert('Mohon cantumkan arahan revisi untuk tim pembuat proposal.');
       return;
     }
+    const targetProp = proposals.find((p) => p.id === proposalId);
     const now = new Date();
     const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
     setProposals((prev) =>
@@ -113,6 +127,17 @@ export function App() {
           : p
       )
     );
+    dispatchSDLCEvent({
+      type: 'proposal_revision_requested',
+      proposalId,
+      proposalTitle: targetProp?.title,
+      authorId: targetProp?.authorId,
+      authorName: targetProp?.authorName,
+      targetBacklogId: targetProp?.targetBacklogId,
+      targetBacklogTitle: targetProp?.targetBacklogTitle,
+      notes: feedbackNote,
+      timestamp: timeStr,
+    });
     setFeedbackNote('');
   };
 
@@ -121,6 +146,7 @@ export function App() {
       alert('Mohon cantumkan alasan penolakan proposal.');
       return;
     }
+    const targetProp = proposals.find((p) => p.id === proposalId);
     const now = new Date();
     const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
     setProposals((prev) =>
@@ -135,6 +161,17 @@ export function App() {
           : p
       )
     );
+    dispatchSDLCEvent({
+      type: 'proposal_rejected',
+      proposalId,
+      proposalTitle: targetProp?.title,
+      authorId: targetProp?.authorId,
+      authorName: targetProp?.authorName,
+      targetBacklogId: targetProp?.targetBacklogId,
+      targetBacklogTitle: targetProp?.targetBacklogTitle,
+      notes: feedbackNote,
+      timestamp: timeStr,
+    });
     setFeedbackNote('');
   };
 
@@ -163,6 +200,16 @@ export function App() {
 
     setProposals((prev) => [newProp, ...prev]);
     setSelectedProposalId(id);
+    dispatchSDLCEvent({
+      type: 'proposal_created',
+      proposalId: id,
+      proposalTitle: newTitle,
+      authorId: 12,
+      authorName: 'Tara Wulandari',
+      targetBacklogId: newBacklogId,
+      targetBacklogTitle: newBacklogTitle,
+      timestamp: timeStr,
+    });
     setNewTitle('');
     setNewSummary('');
     setNewMarkdown('');
@@ -170,8 +217,16 @@ export function App() {
   };
 
   const handleAuthorizeRelease = () => {
+    const now = new Date();
+    const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
     setReleaseAuthorized(true);
     localStorage.setItem('lokatalenta-release-authorized', 'true');
+    dispatchSDLCEvent({
+      type: 'release_authorized',
+      version: releaseVersion,
+      notes: releaseNotes,
+      timestamp: timeStr,
+    });
   };
 
   const getStatusBadge = (status: ProposalStatus) => {

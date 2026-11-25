@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { INITIAL_PROPOSALS, RELEASE_GATES } from './data'
+import { dispatchSDLCEvent } from './services/eventBus'
 
 describe('Lokatalenta Approval Portal Core Domain', () => {
   it('loads all 6 official SDLC proposals', () => {
@@ -24,5 +25,17 @@ describe('Lokatalenta Approval Portal Core Domain', () => {
     const requiredKeys = ['RG-01', 'RG-02', 'RG-03', 'RG-04', 'RG-05']
     const gateIds = RELEASE_GATES.map(g => g.id)
     requiredKeys.forEach(key => expect(gateIds).toContain(key))
+  })
+
+  it('dispatches cross-portal SDLC events reliably without throwing', () => {
+    expect(() => {
+      dispatchSDLCEvent({
+        type: 'proposal_approved',
+        proposalId: 'PRP-2101',
+        proposalTitle: 'LMS Hexagonal Theme Token Engine',
+        notes: 'Disetujui penuh oleh Team Lead.',
+        timestamp: '19:00',
+      })
+    }).not.toThrow()
   })
 })
