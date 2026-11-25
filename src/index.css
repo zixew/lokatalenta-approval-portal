@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+:root {
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --border-industrial: #D4D4CE;
+  --bg-canvas: #F4F4F1;
+  --status-teal: #0F766E;
+}
+
+.dark {
+  --border-industrial: #282E3D;
+  --bg-canvas: #0D1117;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+}
