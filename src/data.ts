@@ -93,8 +93,10 @@ Memohon sign-off dari Mas Rizco Renova agar token ini menjadi standar absolut li
     authorDivision: 'engineering',
     targetBacklogId: 'BL-211',
     targetBacklogTitle: 'LMS Semantic Token Engine & Industrial Theme Contract',
-    status: 'pending_approval',
+    status: 'approved',
     submittedAt: '17:42',
+    reviewedAt: '18:50',
+    leadNotes: 'Disetujui penuh oleh Team Lead Rizco Renova. Standar token industrial terkunci untuk seluruh komponen.',
   },
   {
     id: 'PRP-2104',
@@ -145,8 +147,10 @@ Memohon otorisasi dari Mas Rizco selaku Team Lead untuk menerapkan header CSP ke
     authorDivision: 'engineering',
     targetBacklogId: 'FIX-211',
     targetBacklogTitle: 'Zero-Vulnerability CSP Headers & Strict Dependency Audit',
-    status: 'pending_approval',
+    status: 'approved',
     submittedAt: '17:50',
+    reviewedAt: '18:55',
+    leadNotes: 'Disetujui penuh oleh Team Lead Rizco Renova. Terapkan header CSP ketat pada seluruh deployment produksi.',
   },
   {
     id: 'PRP-2106',
